@@ -1,0 +1,47 @@
+app.js - App entry point
+api - Express route controllers for all the endpoints of the app.
+config - Environment variables and configuration related stuff
+jobs - Jobs definitions
+loaders - Split the startup process into modules
+models - Database models
+services - All the business logic is here
+subscribers - Event handlers for async task
+
+-------- 
+types - Type declarationn files (d.ts) for Typescript
+
+
+Pre-requisite
+=============
+npm install -g npm
+
+
+Required modules
+================
+npm install dotenv
+npm install winston
+npm install winston-daily-rotate-file
+
+---
+
+
+
+# Node version
+node -v 
+
+--- --- --- --- --- --- --- --- --- 
+
+<< Backlog >> 
+Config loading (dotenv) - DONE 
+Logging (Wiston)  - DONE (08 Feb 2021)
+API (Express) - 
+Logging request with corelation id - 
+dockerizing - 
+mongodb connection - 
+Data validator - joi
+Analytics & Metrics - Graphana
+
+--- --- --- --- --- --- --- --- --- 
+< Read links > 
+https://12factor.net/codebase
+
