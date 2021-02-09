@@ -1,45 +1,31 @@
+'use strict';
+const LOGGER = require('./applogger').LOGGER;
+const correlator = require('express-correlation-id');
+const express = require('express');
 
-//const { transports, createLogger, format } = require('winston');
-//const DailyRotateFile = require('winston-daily-rotate-file');
+LOGGER.info('Application loading...');
 
-const winston = require('winston');
-require('winston-daily-rotate-file');
-
-const logfileTransport = new (winston.transports.DailyRotateFile)({
-    filename: process.env.LOGGING_FOLDER + 'applog_%DATE%.log',
-    datePattern: 'YYYY-MM-DD-HH',
-    handleExceptions: false,
-    zippedArchive: true,
-    maxSize: '20m',
-    maxFiles: '15d'
+const PORT = process.env.API_PORT;
+const app = express();
+app.listen(PORT, () => {
+    LOGGER.info('App listening at http://localhost:${PORT}');
 });
 
-const errorlogfileTransport = new (winston.transports.DailyRotateFile)({
-    filename: process.env.LOGGING_FOLDER + 'error_%DATE%.log',
-    level: 'error',
-    datePattern: 'YYYY-MM-DD-HH',
-    handleExceptions: true,
-    zippedArchive: true,
-    maxSize: '20m',
-    maxFiles: '15d'
+app.use(correlator());
+
+// API Request Response logging
+app.use(function (req, res, next) {
+    LOGGER.info('REQUEST: ' + req.correlationId() + ' ' + req.url);
+    res.on('finish', function () {
+        //LOGGER.info('Response: ' + Object.keys(res));
+        LOGGER.info(correlator.getId() + ' ' + res.statusCode + ' ' + res.statusMessage);
+    });
+    next();
 });
 
-const LOGGER = winston.createLogger({
-    level: process.env.LOGGING_LEVEL,
-    format: winston.format.combine(
-        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
-        winston.format.json()
-    ),
-    transports: [
-        logfileTransport,
-        errorlogfileTransport,
-        new (winston.transports.Console)({ 'timestamp': true })
-    ]
-});
+require('./api/testAPI.js')(app);
+LOGGER.info('Application ready.');
 
-if (process.env.NODE_ENV == 'production') {
-    LOGGER.remove(winston.transports.Console);
-}
-
-LOGGER.info('Logger Level :' + process.env.LOGGING_LEVEL);
-// LOGGER.info(process.env);
+// --------- DO NOT CHANGE ANYTHING ABOVE THIS LINE ---------
+// Sample to add API routes
+// require('./api/testAPI.js')(app);

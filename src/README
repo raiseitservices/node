@@ -6,15 +6,12 @@ loaders - Split the startup process into modules
 models - Database models
 services - All the business logic is here
 subscribers - Event handlers for async task
-
 -------- 
 types - Type declarationn files (d.ts) for Typescript
-
 
 Pre-requisite
 =============
 npm install -g npm
-
 
 Required modules
 ================
@@ -24,8 +21,6 @@ npm install winston-daily-rotate-file
 
 ---
 
-
-
 # Node version
 node -v 
 
@@ -34,14 +29,28 @@ node -v
 << Backlog >> 
 Config loading (dotenv) - DONE 
 Logging (Wiston)  - DONE (08 Feb 2021)
-API (Express) - 
-Logging request with corelation id - 
-dockerizing - 
-mongodb connection - 
-Data validator - joi
-Analytics & Metrics - Graphana
+Basic API (Express) - DONE (09 Feb 2021)
+Logging request with corelation id - DONE (09 Feb 2021)
+dockerizing - DONE (09 Feb 2021)
+Remote Logging - 
+
+mongodb connection for sample usecase - 
+CRUD over Mongo collection API (Express) -
+    Data validator (joi) - 
+Analytics & Metrics (Structured logging - Graphana) 
+Create background jobs - 
 
 --- --- --- --- --- --- --- --- --- 
+BUILD:
+    docker build -t nodeapp .
+
+RUN: 
+    docker run -p 4000:4000 nodeapp
+
+--- --- --- --- --- --- --- --- --- 
+
 < Read links > 
 https://12factor.net/codebase
+
+--------------------------------------
 
