@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+  elasticsearch:
+    image: elastic/elasticsearch:7.12.0
+    command: elasticsearch -Enetwork.host=0.0.0.0 -Ediscovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash:
+    build: logstash/
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    ports:
+      - "12201:12201/udp"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: kibana/
+    command: /tmp/entrypoint.sh
+    ports:
+      - "5601:5601"
+    depends_on:
+      - logstash
+
+  node: 
+    build:
+      context: src/
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: dev
+    ports:
+      - '4000:4000'
+    command: node -r dotenv/config app.js dotenv_config_path=./config/dev.env
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+        tag: docker.test1
+    depends_on:
+      - logstash
