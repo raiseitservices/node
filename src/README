@@ -7,26 +7,35 @@ models - Database models
 services - All the business logic is here
 subscribers - Event handlers for async task
 -------- 
-types - Type declarationn files (d.ts) for Typescript
+types - Type declaration files (d.ts) for Typescript
 
 Pre-requisite
 =============
-npm install -g npm
+npm install -g npm@latest
+npm install -g update-node
+
 
 Required modules
 ================
 npm install dotenv
 npm install winston
 npm install winston-daily-rotate-file
+npm install winston-log2gelf
 
 ---
 
 # Node version
 node -v 
 
+---
+
+Build elastic stack docker images: 
+
+
 --- --- --- --- --- --- --- --- --- 
 
 << Backlog >> 
+=============
 Config loading (dotenv) - DONE 
 Logging (Wiston)  - DONE (08 Feb 2021)
 Basic API (Express) - DONE (09 Feb 2021)
@@ -39,10 +48,13 @@ CRUD over Mongo collection API (Express) -
     Data validator (joi) - 
 Analytics & Metrics (Structured logging - Graphana) 
 Create background jobs - 
+Load balancing requests (Docker compose...)
+
+"apt-get" not working for kibana image!? 
 
 --- --- --- --- --- --- --- --- --- 
 BUILD:
-    docker build -t nodeapp .
+    docker build -tag nodeapp .
 
 RUN: 
     docker run -p 4000:4000 nodeapp
@@ -51,6 +63,16 @@ RUN:
 
 < Read links > 
 https://12factor.net/codebase
+
+https://ibm-cloud-architecture.github.io/b2m-nodejs/logging/
+
+https://coralogix.com/log-analytics-blog/managing-docker-logs-with-elk-and-fluentd/
+https://ibm-cloud-architecture.github.io/b2m-nodejs/logging/
+https://dzone.com/articles/docker-centralized-logging-with-elk-stack
+https://www.loggly.com/ultimate-guide/centralizing-node-logs/
+
+
+https://howtodoinjava.com/microservices/elk-stack-tutorial-example/
 
 --------------------------------------
 

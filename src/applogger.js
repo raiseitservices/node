@@ -1,7 +1,9 @@
 'use strict';
 const winston = require('winston');
 require('winston-daily-rotate-file');
+const Log2gelf = require('winston-log2gelf');
 
+/*
 const logfileTransport = new (winston.transports.DailyRotateFile)({
     filename: process.env.LOGGING_FOLDER + 'applog_%DATE%.log',
     datePattern: 'YYYY-MM-DD-HH',
@@ -21,6 +23,8 @@ const errorlogfileTransport = new (winston.transports.DailyRotateFile)({
     maxFiles: '15d'
 });
 
+*/
+
 const LOGGER = winston.createLogger({
     level: process.env.LOGGING_LEVEL,
     format: winston.format.combine(
@@ -28,9 +32,18 @@ const LOGGER = winston.createLogger({
         winston.format.json()
     ),
     transports: [
-        logfileTransport,
-        errorlogfileTransport,
-        new (winston.transports.Console)({ 'timestamp': true })
+        //logfileTransport,
+        //errorlogfileTransport,
+        new (winston.transports.Console)({ 'timestamp': true }),
+        new Log2gelf({
+            level: 'info',
+            host: 'localhost',
+            port: 12201,
+            protocol: 'tls',
+            handleExceptions: true, // handle exception within Log2gelf
+            exitOnError: true, // exit after exception has been sent
+            exitDelay: 1000 // leave Log2gelf 1sec to send the message
+        })
     ]
 });
 

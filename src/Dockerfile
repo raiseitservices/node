@@ -18,7 +18,8 @@ RUN npm install && \
 
 # Bundle app source
 COPY . .
+#ADD . /usr/src/app
 
-EXPOSE 4000
+#EXPOSE 4000
 ##CMD [ "node", "-r dotenv/config", "app.js", "dotenv_config_path=./config/dev.env" ]
-CMD node -r dotenv/config app.js dotenv_config_path=./config/dev.env
+#CMD node -r dotenv/config app.js dotenv_config_path=./config/dev.env
