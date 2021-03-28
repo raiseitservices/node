@@ -8,17 +8,17 @@ LOGGER.info('Application loading...');
 const PORT = process.env.API_PORT;
 const app = express();
 app.listen(PORT, () => {
-    LOGGER.info('App listening at http://localhost:${PORT}');
+    LOGGER.info('Appurl: http://localhost:${PORT}');
 });
 
 app.use(correlator());
 
 // API Request Response logging
 app.use(function (req, res, next) {
-    LOGGER.info('REQUEST: ' + req.correlationId() + ' ' + req.url);
+    LOGGER.info('reqId:' + req.correlationId() + ', url:' + req.url);
     res.on('finish', function () {
         //LOGGER.info('Response: ' + Object.keys(res));
-        LOGGER.info(correlator.getId() + ' ' + res.statusCode + ' ' + res.statusMessage);
+        LOGGER.info('reqId:' + correlator.getId() + ', status:' + res.statusCode + ', statusMsg:' + res.statusMessage);
     });
     next();
 });

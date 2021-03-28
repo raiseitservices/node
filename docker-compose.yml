@@ -13,6 +13,7 @@ services:
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     ports:
       - "12201:12201/udp"
+      - "9600:9600"
     depends_on:
       - elasticsearch
 
@@ -37,6 +38,6 @@ services:
       driver: gelf
       options:
         gelf-address: "udp://localhost:12201"
-        tag: docker.test1
+        tag: docker.nodeapp1
     depends_on:
       - logstash

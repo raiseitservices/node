@@ -27,6 +27,7 @@ const errorlogfileTransport = new (winston.transports.DailyRotateFile)({
 
 const LOGGER = winston.createLogger({
     level: process.env.LOGGING_LEVEL,
+    exitOnError: false,
     format: winston.format.combine(
         winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
         winston.format.json()
@@ -47,8 +48,8 @@ const LOGGER = winston.createLogger({
     ]
 });
 
-if (process.env.NODE_ENV == 'production') {
+/*if (process.env.NODE_ENV == 'production') {
     LOGGER.remove(winston.transports.Console);
-}
+}*/
 
 module.exports.LOGGER = LOGGER;

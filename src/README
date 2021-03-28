@@ -54,7 +54,7 @@ Load balancing requests (Docker compose...)
 
 --- --- --- --- --- --- --- --- --- 
 BUILD:
-    docker build -tag nodeapp .
+    docker build -tnodeapp .
 
 RUN: 
     docker run -p 4000:4000 nodeapp
@@ -76,3 +76,13 @@ https://howtodoinjava.com/microservices/elk-stack-tutorial-example/
 
 --------------------------------------
 
+https://www.elastic.co/guide/en/logstash/current/node-info-api.html
+
+
+===
+Logstash debugging
+
+http://localhost:9600/_node
+http://localhost:9600/_node/plugins?pretty
+http://localhost:9600/_node/stats?pretty
+http://localhost:9600/_node/hot_threads?pretty

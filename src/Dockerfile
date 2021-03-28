@@ -22,4 +22,4 @@ COPY . .
 
 #EXPOSE 4000
 ##CMD [ "node", "-r dotenv/config", "app.js", "dotenv_config_path=./config/dev.env" ]
-#CMD node -r dotenv/config app.js dotenv_config_path=./config/dev.env
+CMD node -r dotenv/config app.js dotenv_config_path=./config/dev.env
